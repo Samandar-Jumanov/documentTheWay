@@ -9,6 +9,7 @@ import com.dtw.mapper.UserMapper;
 import com.dtw.repo.UserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class UserServiceImpl {
 
     @Autowired
     private final  UserRepo userRepo;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     UserServiceImpl ( UserRepo repo ){
           this.userRepo = repo;
@@ -35,6 +37,10 @@ public class UserServiceImpl {
         if(existingUser.isPresent()){
             throw new UsernameTakenException("Username already taken");
         }
+
+        userDto.setPassword(encoder.encode(userDto.getPassword()));
+
+        System.out.println(userDto.getPassword());
 
         User userEntity = UserMapper.MAPPER.mapToUser(userDto);
         User newUser = this.userRepo.save(userEntity);
@@ -56,6 +62,8 @@ public class UserServiceImpl {
         User foundUser = this.userRepo.findById(id)
                 .orElseThrow( ( ) -> new ResourceNotFoundException("Not found " , "User" , id ));
 
+
+        userDto.setPassword(encoder.encode(userDto.getPassword()));
         foundUser.setPassword(userDto.getPassword()); // hash before saving password
         foundUser.setUsername(userDto.getUsername());
         foundUser.setFullName(userDto.getFullName());

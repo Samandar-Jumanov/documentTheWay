@@ -1,44 +1,55 @@
 package com.dtw.config;
 
 
-import com.dtw.entity.User;
+import com.dtw.serviceImpl.DaoUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
+@EnableWebSecurity
 public class Security {
 
+    // Auth provider
+    @Autowired
+     private DaoUserDetailsService userDetailsService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity  http ) throws  Exception {
-         http.csrf().disable()
-                 .authorizeHttpRequests(authorize -> {
-                       authorize.anyRequest().authenticated();
-                 }).httpBasic(Customizer.withDefaults());
-
-         return  http.build();
+    public AuthenticationProvider authProvider() {
+        DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
+        return provider;
     }
 
     @Bean
-    public  static   PasswordEncoder passwordEncoder (){
-        return  new BCryptPasswordEncoder();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.csrf(customizer -> customizer.disable())
+                .authorizeHttpRequests(request -> request.anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        return http.build();
     }
 
+
+//    @Bean
 //   public  UserDetailsService userDetails( ){
 //
-//        UserDetails user = User.builder().
-//                username("@lockUser")
+//        UserDetails user = org.springframework.security.core.userdetails.User
+//                .withDefaultPasswordEncoder()
+//                .username("@lockUser")
 //                .password(passwordEncoder().encode("password"))
-//                .fullName("Samandar Jumanov")
 //                .build();
 //
 //
@@ -52,4 +63,6 @@ public class Security {
 //        return new  InMemoryUserDetailsManager(user , adminUser);
 //
 //    }
+
+
 }
