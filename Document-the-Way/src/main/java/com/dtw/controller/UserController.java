@@ -3,10 +3,16 @@ package com.dtw.controller;
 
 import com.dtw.dtos.UserDto;
 import com.dtw.serviceImpl.UserServiceImpl;
+import com.dtw.utils.JwtService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +23,46 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
 
-    private UserServiceImpl userServiceImpl;
 
-    @PostMapping
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @PostMapping("/auth/register")
     public ResponseEntity<UserDto> createUser (
             @Valid @RequestBody UserDto userDto
     ){
         UserDto newUser = this.userServiceImpl.createUser(userDto);
         return  new ResponseEntity<>(newUser , HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<String> loginAcc(@Valid @RequestBody UserDto userDto) {
+        try {
+
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
+            );
+
+            if(authentication.isAuthenticated()) {
+
+                String token = jwtService.generateToken(userDto.getUsername());
+                return new ResponseEntity<>(token,  HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+            }
+
+
+        } catch (AuthenticationException e) {
+            System.out.println("Authentication failed: " + e.getMessage());
+            return new ResponseEntity<>("Authentication failed: " + e.getMessage(),
+                    HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("/{id}")
