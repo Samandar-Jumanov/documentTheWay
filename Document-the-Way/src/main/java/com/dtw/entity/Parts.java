@@ -2,9 +2,7 @@ package com.dtw.entity;
 
 
 import com.dtw.enums.PartsEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -22,6 +20,10 @@ public class Parts {
     private PartsEnum partName;
 
     // connect with resources
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn( name = "document_id" , nullable = false )
+    private Document document;
 
 
 }

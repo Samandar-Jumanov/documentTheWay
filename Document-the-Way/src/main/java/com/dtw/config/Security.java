@@ -41,24 +41,24 @@ public class Security {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
                                 "/api/users/auth/login",
-                                "/api/users/auth/register",
-                                "/oauth2/**",
-                                "/login/**"
+                                "/api/users/auth/register"
+//                                "/oauth2/**",
+//                                "/login/**"
                         ).permitAll()
                         .anyRequest()
                         .authenticated()
                 )
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/api/users/auth/oauth2/success", true)
-                        .failureUrl("/api/users/auth/oauth2/failure")
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/api/users/auth/login")
-                        .defaultSuccessUrl("/api/users/auth/success", true)
-                        .failureUrl("/api/users/auth/failure")
-                )
+//                .oauth2Login(oauth2 -> oauth2
+//                        .loginPage("/login")
+//                        .defaultSuccessUrl("/api/users/auth/oauth2/success", true)
+//                        .failureUrl("/api/users/auth/oauth2/failure")
+////                )
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .loginProcessingUrl("/api/users/auth/login")
+//                        .defaultSuccessUrl("/api/users/auth/success", true)
+//                        .failureUrl("/api/users/auth/failure")
+//                )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

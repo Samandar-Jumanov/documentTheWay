@@ -39,9 +39,6 @@ public class UserServiceImpl {
         }
 
         userDto.setPassword(encoder.encode(userDto.getPassword()));
-
-        System.out.println(userDto.getPassword());
-
         User userEntity = UserMapper.MAPPER.mapToUser(userDto);
         User newUser = this.userRepo.save(userEntity);
         return UserMapper.MAPPER.mapToUserDto(newUser);

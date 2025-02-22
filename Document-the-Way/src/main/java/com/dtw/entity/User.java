@@ -3,11 +3,10 @@ package com.dtw.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Set;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table( name = "users")
 @Builder
-public class User  implements UserDetails {
+public class User   {
 
 
     @Id
@@ -31,13 +30,10 @@ public class User  implements UserDetails {
     private String password;
 
 
-    private Set<GrantedAuthority> authorities;
+    // Relationship with Document entity
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Document> documents = new ArrayList<>();
 
-    // Implement all UserDetails methods
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
 
 
 }
