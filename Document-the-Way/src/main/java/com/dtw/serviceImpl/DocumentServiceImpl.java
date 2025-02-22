@@ -3,6 +3,7 @@ package com.dtw.serviceImpl;
 import com.dtw.dtos.DocumentDto;
 import com.dtw.entity.Document;
 import com.dtw.entity.User;
+import com.dtw.exception.ResourceNotFoundException;
 import com.dtw.mapper.DocumentMapper;
 import com.dtw.repo.DocumentRepo;
 import com.dtw.repo.UserRepo;
@@ -40,7 +41,7 @@ public class DocumentServiceImpl {
     public DocumentDto getSingleDocumentOfUser(Long id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Document document = documentRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Document not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Document Not found", "Document" , id));
 
         // Verify document belongs to current user
         if (!document.getUser().getUsername().equals(username)) {

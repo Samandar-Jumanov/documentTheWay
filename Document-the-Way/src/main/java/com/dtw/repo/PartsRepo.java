@@ -1,7 +1,12 @@
 package com.dtw.repo;
 
-import com.dtw.entity.Parts;
+import com.dtw.entity.Document;
+import com.dtw.entity.Part;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PartsRepo extends JpaRepository<Parts, Long > {
+import java.util.List;
+
+public interface PartsRepo extends JpaRepository<Part, Long > {
+
+    List<Part> findByDocument(Document document);
 }
