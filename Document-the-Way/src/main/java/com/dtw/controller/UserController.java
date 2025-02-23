@@ -85,4 +85,14 @@ public class UserController {
         UserDto updatedUser = this.userServiceImpl.updateUser(userDto , id);
         return  new ResponseEntity<>(updatedUser , HttpStatus.OK);
     }
+
+
+    @GetMapping("/same-reposts/{repostId}")
+    public  ResponseEntity<List<UserDto>> findUsersSameReposts(
+            @PathVariable Long repostId
+    ){
+        List<UserDto> users = userServiceImpl.findUsersByRepost(repostId);
+        return  new ResponseEntity<>(users , HttpStatus.OK);
+    }
+
 }

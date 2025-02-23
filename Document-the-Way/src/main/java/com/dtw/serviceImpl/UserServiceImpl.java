@@ -2,27 +2,36 @@ package com.dtw.serviceImpl;
 
 
 import com.dtw.dtos.UserDto;
+import com.dtw.entity.RepostedDocument;
 import com.dtw.entity.User;
 import com.dtw.exception.ResourceNotFoundException;
 import com.dtw.exception.UsernameTakenException;
 import com.dtw.mapper.UserMapper;
+import com.dtw.repo.RepostedDocumentRepo;
 import com.dtw.repo.UserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
+@Transactional
 public class UserServiceImpl {
 
+
+    @Autowired
+    private RepostedDocumentRepo repostedDocumentRepo;
     @Autowired
     private final  UserRepo userRepo;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
 
     UserServiceImpl ( UserRepo repo ){
           this.userRepo = repo;
@@ -79,6 +88,17 @@ public class UserServiceImpl {
                   return UserMapper.MAPPER.mapToUserDto(foundUser);
 
     }
+
+    // get users who has same reposts
+
+    public List<UserDto> findUsersByRepost( Long id ){
+        RepostedDocument repost = repostedDocumentRepo.findById(id)
+                .orElseThrow(( ) -> new ResourceNotFoundException("Repost" , "Repost not found ", id));
+        Stream<User> users = userRepo.findByReposts(repost);
+        return users.map(UserMapper.MAPPER::mapToUserDto)
+                .collect(Collectors.toList());
+    }
+
 
 
 }

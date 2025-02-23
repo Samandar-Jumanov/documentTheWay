@@ -18,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @Table( name = "users")
 @Builder
+
+
 public class User   {
 
 
@@ -33,13 +35,18 @@ public class User   {
     private String password;
 
 
-    // Relationship with Document entity
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
     private List<Feedback> feedbacks = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<RepostedDocument> reposts;
+
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

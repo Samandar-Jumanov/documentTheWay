@@ -30,6 +30,9 @@ public class Part {
     @ManyToOne(fetch = FetchType.LAZY)
     private Document document;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RepostedDocument repost;
+
     @CreationTimestamp
     private LocalTime createdAt;
 
