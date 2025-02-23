@@ -37,6 +37,9 @@ public class User   {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Feedback> feedbacks = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;
 
