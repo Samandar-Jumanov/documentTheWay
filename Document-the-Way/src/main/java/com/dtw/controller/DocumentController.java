@@ -4,6 +4,11 @@ package com.dtw.controller;
 import com.dtw.dtos.DocumentDto;
 import com.dtw.entity.Document;
 import com.dtw.serviceImpl.DocumentServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user/documents")
 @AllArgsConstructor
+@Tag( name = "Document")
 public class DocumentController {
 
 

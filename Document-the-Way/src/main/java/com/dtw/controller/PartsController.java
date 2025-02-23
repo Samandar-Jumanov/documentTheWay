@@ -3,6 +3,8 @@ package com.dtw.controller;
 
 import com.dtw.dtos.PartDto;
 import com.dtw.serviceImpl.PartsServiceImpl;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/parts")
+@Tag(name = "Parts")
 public class PartsController {
 
     @Autowired

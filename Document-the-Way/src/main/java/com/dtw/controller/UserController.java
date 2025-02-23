@@ -4,6 +4,7 @@ package com.dtw.controller;
 import com.dtw.dtos.UserDto;
 import com.dtw.serviceImpl.UserServiceImpl;
 import com.dtw.utils.JwtService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
+@Tag(name = "User")
 public class UserController {
 
 
