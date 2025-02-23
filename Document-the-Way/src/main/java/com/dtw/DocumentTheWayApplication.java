@@ -10,6 +10,7 @@ public class DocumentTheWayApplication {
 		SpringApplication.run(DocumentTheWayApplication.class, args);
 	}
 
+
 }
 
 

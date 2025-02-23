@@ -1,7 +1,6 @@
 package com.dtw.entity;
 
 
-import com.dtw.enums.PartsEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
