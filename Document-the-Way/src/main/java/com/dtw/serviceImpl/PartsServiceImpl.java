@@ -8,7 +8,6 @@ import com.dtw.exception.ResourceNotFoundException;
 import com.dtw.mapper.PartMapper;
 import com.dtw.repo.DocumentRepo;
 import com.dtw.repo.PartsRepo;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,6 @@ public class PartsServiceImpl {
                 .orElseThrow( ( ) ->new ResourceNotFoundException("Part not found " , "Part " , id));
 
        return  partsRepo.findByDocument(document)
-               .stream()
                .map(PartMapper.MAPPER::mapPartToPartDto)
                .collect(Collectors.toList());
 
@@ -70,11 +68,11 @@ public class PartsServiceImpl {
         return PartMapper.MAPPER.mapPartToPartDto(foundPart);
     }
 
-    public PartDto update(Long id, @Valid PartDto partDto) {
-
+    public PartDto update(Long id,  PartDto partDto) {
 
         Part foundPart = partsRepo.findById(id)
                 .orElseThrow(( ) -> new ResourceNotFoundException("Part not found" , "Part" , id));
+
 
         foundPart.setPartTitle(partDto.getPartTitle());
         foundPart.setResource(partDto.getResource());

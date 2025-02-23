@@ -30,7 +30,7 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
                 request.getDescription(false),
                 "NOT_FOUND",
                 LocalTime.now(),
-                "User not found "
+                exception.getMessage()
         );
 
         return  new ResponseEntity<ErrorDetails>(errDetails , HttpStatus.NOT_FOUND);

@@ -2,7 +2,6 @@ package com.dtw.controller;
 
 
 import com.dtw.dtos.PartDto;
-import com.dtw.entity.Part;
 import com.dtw.serviceImpl.PartsServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
