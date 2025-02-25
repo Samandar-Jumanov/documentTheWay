@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
                 license = @License(
                         name = "MIT Licence"
                 )
-
          ),
         security = @SecurityRequirement(
                 name = "bearer"

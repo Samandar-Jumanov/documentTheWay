@@ -22,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/user/documents")
 @AllArgsConstructor
 @Tag( name = "Document")
+
 public class DocumentController {
 
 
