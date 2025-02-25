@@ -1,6 +1,5 @@
 package com.dtw.config;
 
-
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -23,18 +22,17 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
                 license = @License(
                         name = "MIT Licence"
                 )
-         ),
+        ),
         security = @SecurityRequirement(
-                name = "bearer"
+                name = "bearerAuth"  // This name must match the name in @SecurityScheme
         )
-
 )
 
 @SecurityScheme(
-        name = "Bearer auth",
+        name = "bearerAuth",  // This name must be consistent throughout
         description = "JWT token that expires in every 3 minutes",
         scheme = "bearer",
-        type =  SecuritySchemeType.HTTP,
+        type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
         in = SecuritySchemeIn.HEADER
 )
