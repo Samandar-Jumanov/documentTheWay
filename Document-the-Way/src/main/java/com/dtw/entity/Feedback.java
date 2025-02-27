@@ -21,7 +21,7 @@ public class Feedback {
     @Column( nullable = true)
     private String solution;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id" , nullable = false)
     private User user;
 

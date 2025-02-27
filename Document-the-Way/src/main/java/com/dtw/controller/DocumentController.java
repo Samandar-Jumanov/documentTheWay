@@ -25,7 +25,6 @@ import java.util.List;
 
 public class DocumentController {
 
-
     @Autowired
     private DocumentServiceImpl documentService;
 
@@ -41,7 +40,7 @@ public class DocumentController {
     public ResponseEntity<DocumentDto> getDocument(
             @PathVariable Long id
     ){
-        DocumentDto document = documentService.getSingleDocumentOfUser(id);
+        DocumentDto document = documentService.getSingleDocument(id);
         return new ResponseEntity<>(document , HttpStatus.OK);
     };
 

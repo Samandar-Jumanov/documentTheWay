@@ -26,10 +26,11 @@ public class Part {
 
     // connect with resources
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Document document;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+
     private RepostedDocument repost;
 
     @CreationTimestamp

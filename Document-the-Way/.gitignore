@@ -4,6 +4,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+
+
+# variables
+# Ignore real config, track example only
+/src/main/resources/application.properties
+!src/main/resources/application.properties.example
+
 ### STS ###
 .apt_generated
 .classpath

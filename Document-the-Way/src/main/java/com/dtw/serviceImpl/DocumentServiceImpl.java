@@ -33,12 +33,11 @@ public class DocumentServiceImpl {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         return documentRepo.findByUser(currentUser)
-                .stream()
                 .map(DocumentMapper.MAPPER::mapToDocumentDto)
                 .collect(Collectors.toList());
     }
 
-    public DocumentDto getSingleDocumentOfUser(Long id) {
+    public DocumentDto getSingleDocument(Long id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Document document = documentRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Document Not found", "Document" , id));
@@ -47,16 +46,8 @@ public class DocumentServiceImpl {
         if (!document.getUser().getUsername().equals(username)) {
             throw new SecurityException("Access denied to document: " + id);
         }
-
         return DocumentMapper.MAPPER.mapToDocumentDto(document);
     }
-
-
-
-
-    // To Do
-    // find document in real time should be available here
-
 
 
     public DocumentDto createDocument(@Valid DocumentDto docDto) {
@@ -114,33 +105,4 @@ public class DocumentServiceImpl {
     }
 
 
-    public void sendNotification(Long documentId , Long ownerId ){
-
-//        Notification notification = Notification.builder()
-//                .r(event.getOwnerId())
-//                .type("DOCUMENT_VIEW")
-//                .content(event.getViewerUsername() + " viewed your course \"" + event.getDocumentTitle() + "\"")
-//                .documentId(event.getDocumentId())
-//                .createdAt(event.getTimestamp())
-//                .read(false)
-//                .build();
-
-
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepo.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        Document foundDocument = documentRepo.findById(documentId)
-                .orElseThrow(( ) ->  new ResourceNotFoundException("Document" , "Not found" , documentId));
-
-
-
-
-
-
-
-
-
-
-    }
 }

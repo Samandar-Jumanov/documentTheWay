@@ -1,5 +1,6 @@
 package com.dtw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,8 +23,8 @@ public class Document {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "document" , cascade = CascadeType.ALL , orphanRemoval = true )
@@ -33,7 +34,7 @@ public class Document {
     private List<RepostedDocument> reposts = new ArrayList<>();
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_id" , nullable = true)
     private Purchase purchase;
 

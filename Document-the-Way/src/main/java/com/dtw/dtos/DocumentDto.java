@@ -30,5 +30,7 @@ public class DocumentDto {
     @NotNull
     private String description;
 
+    private Long userId;
+
 
 }

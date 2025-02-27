@@ -1,6 +1,5 @@
 package com.dtw.dtos;
 
-import com.dtw.enums.PartsEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +21,6 @@ public class PartDto {
 
     @NotNull
     private String resource;
+
 
 }

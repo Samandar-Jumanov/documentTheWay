@@ -44,12 +44,16 @@ public class Security {
                                 "/api/users/auth/register",
                                 "swagger-ui/index.html",
                                 "swagger-ui/**",
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+                                "/",
+                                "/login",
+                                "/continue"
 
                         ).permitAll()
                         .anyRequest()
                         .authenticated()
                 )
+                .oauth2Login(Customizer.withDefaults())
 
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
