@@ -26,20 +26,28 @@ public class Document {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "document")
+    @OneToMany(mappedBy = "document" , cascade = CascadeType.ALL , orphanRemoval = true )
     private List<Part> parts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "document")
-    private List<RepostedDocument> reposts;
+    @OneToMany(mappedBy = "document" ,cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<RepostedDocument> reposts = new ArrayList<>();
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_id" , nullable = true)
+    private Purchase purchase;
 
     private String title;
     private String description;
+
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
 
 
 

@@ -111,6 +111,36 @@ public class DocumentServiceImpl {
     private void updateDocumentProperties(Document existingDocument, DocumentDto dto) {
         existingDocument.setTitle(dto.getTitle());
         existingDocument.setDescription(dto.getDescription());
-        // Update other properties as needed
+    }
+
+
+    public void sendNotification(Long documentId , Long ownerId ){
+
+//        Notification notification = Notification.builder()
+//                .r(event.getOwnerId())
+//                .type("DOCUMENT_VIEW")
+//                .content(event.getViewerUsername() + " viewed your course \"" + event.getDocumentTitle() + "\"")
+//                .documentId(event.getDocumentId())
+//                .createdAt(event.getTimestamp())
+//                .read(false)
+//                .build();
+
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepo.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        Document foundDocument = documentRepo.findById(documentId)
+                .orElseThrow(( ) ->  new ResourceNotFoundException("Document" , "Not found" , documentId));
+
+
+
+
+
+
+
+
+
+
     }
 }

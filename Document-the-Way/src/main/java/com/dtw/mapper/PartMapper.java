@@ -12,7 +12,7 @@ public interface PartMapper {
 
     PartMapper MAPPER = Mappers.getMapper(PartMapper.class);
 
-
+//    @Mapping(source = "document", target = "document")
 
     PartDto mapPartToPartDto (Part part);
     Part mapPartDtoToPart ( PartDto partDto);

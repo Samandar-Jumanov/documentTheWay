@@ -67,7 +67,6 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
         );
 
 
-        System.out.println(exception.getMessage());
 
         return  new ResponseEntity<ErrorDetails>(errDetails , HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -84,8 +83,21 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
             errors.put(fieldName , errMessage);
         });
 
-
-
         return new ResponseEntity<>(errors , HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(NotGrantedAccess.class)
+    public  ResponseEntity<ErrorDetails> handleNotAccessGranted(
+            WebRequest request , ErrorDetails details
+    ){
+
+        ErrorDetails errDetails = new ErrorDetails(
+                request.getDescription(false),
+                "INTERNAL_SERVER_ERROR",
+                LocalTime.now(),
+                "INTERNAL_SERVER_ERROR"
+        );
+        return  new ResponseEntity<ErrorDetails>(errDetails , HttpStatus.FORBIDDEN);
     }
 }

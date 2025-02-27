@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table( name = "users")
 @Builder
-
-
 public class User   {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,25 +31,27 @@ public class User   {
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Document> documents = new ArrayList<>();
+    private List<Document> documents = new ArrayList<Document>();
 
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
-    private List<Feedback> feedbacks = new ArrayList<>();
+    private List<Feedback> feedbacks = new ArrayList<Feedback>();
 
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
-    private List<RepostedDocument> reposts;
+    private List<RepostedDocument> reposts = new ArrayList<RepostedDocument>();
 
+    @OneToMany(mappedBy = "recipient" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Notification> notifications = new ArrayList<Notification>();
+
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private List<Purchase> purchases = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-
-
-
 
 }
