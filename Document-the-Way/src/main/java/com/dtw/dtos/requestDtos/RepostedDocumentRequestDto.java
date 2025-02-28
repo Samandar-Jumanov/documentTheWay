@@ -1,5 +1,4 @@
-package com.dtw.dtos;
-
+package com.dtw.dtos.requestDtos;
 
 import com.dtw.entity.Document;
 import com.dtw.entity.User;
@@ -8,17 +7,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class RepostedDocumentDto {
+@Setter
+@Getter
+public class RepostedDocumentRequestDto {
+
 
     private Long id;
     private Document document;
     private User user;
 
-    public RepostedDocumentDto(User currentUser, Document foundDocument) {
+    public RepostedDocumentRequestDto(User currentUser, Document foundDocument) {
         this.document = foundDocument;
         this.user = currentUser;
     }

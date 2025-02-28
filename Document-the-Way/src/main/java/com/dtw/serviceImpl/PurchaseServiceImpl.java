@@ -7,7 +7,8 @@ package com.dtw.serviceImpl;
 // Remove or update Comment for a particular comment
 
 
-import com.dtw.dtos.PurchaseDto;
+import com.dtw.dtos.requestDtos.PurchaseRequestDto;
+import com.dtw.dtos.responseDtos.PurchaseResponseDto;
 import com.dtw.entity.Document;
 import com.dtw.entity.Purchase;
 import com.dtw.entity.User;
@@ -47,7 +48,7 @@ public class PurchaseServiceImpl {
     @Autowired
     private DocumentRepo documentRepo;
 
-    public List<PurchaseDto> getAllPurchases(){
+    public List<PurchaseResponseDto> getAllPurchases(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User currentUser = userRepo.findByUsername(username)
@@ -60,7 +61,7 @@ public class PurchaseServiceImpl {
 
 
 
-    public PurchaseDto getPurchase(Long purchaseId ){
+    public PurchaseResponseDto getPurchase(Long purchaseId ){
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -78,7 +79,7 @@ public class PurchaseServiceImpl {
     }
 
 
-    public PurchaseDto purchaseDocument(Long documentId){
+    public PurchaseResponseDto purchaseDocument(Long documentId){
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -90,7 +91,7 @@ public class PurchaseServiceImpl {
                 .orElseThrow(() -> new ResourceNotFoundException("Document" , "Document not found " , documentId));
 
 
-        PurchaseDto purchaseDto = new PurchaseDto(
+        PurchaseRequestDto purchaseDto = new PurchaseRequestDto(
                 currentUser ,
                 foundDocument
         );

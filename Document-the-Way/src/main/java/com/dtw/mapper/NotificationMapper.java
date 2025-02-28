@@ -1,7 +1,8 @@
 package com.dtw.mapper;
 
 
-import com.dtw.dtos.NotificationDto;
+import com.dtw.dtos.requestDtos.NotificationRequestDto;
+import com.dtw.dtos.responseDtos.NotificationResponseDto;
 import com.dtw.entity.Notification;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +12,8 @@ public interface NotificationMapper {
 
     NotificationMapper MAPPER = Mappers.getMapper(NotificationMapper.class);
 
-    Notification mapToNotification(NotificationDto dto);
-    NotificationDto mapToNotificationDto ( Notification notification);
-
+    Notification mapToNotification(NotificationRequestDto dto);
+    NotificationResponseDto mapToNotificationDto (Notification notification);
 
 }
 

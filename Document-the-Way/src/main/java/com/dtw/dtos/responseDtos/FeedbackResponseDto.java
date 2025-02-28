@@ -1,9 +1,5 @@
-package com.dtw.dtos;
+package com.dtw.dtos.responseDtos;
 
-
-import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,16 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class FeedbackDto {
+public class FeedbackResponseDto {
 
     private Long id;
-
-    @NotBlank
-    @NotNull
     private String feedbackValue;
-
-    @Nullable
     private String solution;
 
+    private Long userId; // Optional if you want to show the user's ID in response
 }

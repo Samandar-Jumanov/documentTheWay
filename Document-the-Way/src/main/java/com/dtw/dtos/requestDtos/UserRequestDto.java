@@ -1,4 +1,4 @@
-package com.dtw.dtos;
+package com.dtw.dtos.requestDtos;
 
 
 import jakarta.validation.constraints.NotBlank;
@@ -7,16 +7,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+public class UserRequestDto {
 
-public class ContentsDto {
+    private Long id;
 
     @NotBlank
-    private String name;
-
+    private String username;
     @NotBlank
-    private String resourceName;
+    private String fullName;
+    @NotBlank
+    private String password;
+
+
 }

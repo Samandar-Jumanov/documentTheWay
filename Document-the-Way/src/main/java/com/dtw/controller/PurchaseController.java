@@ -1,7 +1,7 @@
 package com.dtw.controller;
 
 
-import com.dtw.dtos.PurchaseDto;
+import com.dtw.dtos.responseDtos.PurchaseResponseDto;
 import com.dtw.serviceImpl.PurchaseServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ public class PurchaseController {
     private PurchaseServiceImpl purchaseService;
 
     @GetMapping
-    public ResponseEntity<List<PurchaseDto>> getAllPurchases(){
+    public ResponseEntity<List<PurchaseResponseDto>> getAllPurchases(){
         return new ResponseEntity<>(purchaseService.getAllPurchases() , HttpStatus.OK);
     } // get all of your purchased documents
 
     @GetMapping("/{id}")
-    public  ResponseEntity<PurchaseDto> getPurchase(
+    public  ResponseEntity<PurchaseResponseDto> getPurchase(
             @PathVariable Long id
     ){
         System.out.println(id);
@@ -35,10 +35,10 @@ public class PurchaseController {
 
 
     @PostMapping("/{id}")
-    public ResponseEntity<PurchaseDto> purchaseDocument(
+    public ResponseEntity<PurchaseResponseDto> purchaseDocument(
             @PathVariable Long id
     ){
-        PurchaseDto purchasedDocument = purchaseService.purchaseDocument(id);
+        PurchaseResponseDto purchasedDocument = purchaseService.purchaseDocument(id);
         return  new ResponseEntity<>(purchasedDocument , HttpStatus.CREATED);
     } // purchase a document
 

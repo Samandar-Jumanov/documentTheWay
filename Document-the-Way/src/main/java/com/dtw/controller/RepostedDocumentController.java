@@ -1,9 +1,8 @@
 package com.dtw.controller;
 
 
-import com.dtw.dtos.RepostedDocumentDto;
+import com.dtw.dtos.responseDtos.RepostedDocumentResponseDto;
 import com.dtw.serviceImpl.RepostedDocumentServiceImpl;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,32 +20,32 @@ public class RepostedDocumentController {
 
 
     @PostMapping("/{documentId}")
-    public ResponseEntity<RepostedDocumentDto> repost(
+    public ResponseEntity<RepostedDocumentResponseDto> repost(
             @PathVariable Long documentId
     ){
-        RepostedDocumentDto repost = repostedDocumentService.createRepost(documentId);
+        RepostedDocumentResponseDto repost = repostedDocumentService.createRepost(documentId);
         return  new ResponseEntity<>(repost, HttpStatus.CREATED);
     } // repost
 
     @GetMapping
-    public ResponseEntity<List<RepostedDocumentDto>> getUserReposts(){
-        List<RepostedDocumentDto> reposts = repostedDocumentService.getUsersReposts();
+    public ResponseEntity<List<RepostedDocumentResponseDto>> getUserReposts(){
+        List<RepostedDocumentResponseDto> reposts = repostedDocumentService.getUsersReposts();
         return new ResponseEntity<>(reposts , HttpStatus.OK);
     } // get user reposts
 
     @DeleteMapping("/{repostId}")
-    public ResponseEntity<RepostedDocumentDto> deleteRepost(
+    public ResponseEntity<RepostedDocumentResponseDto> deleteRepost(
             @PathVariable Long repostId
     ){
-        return new ResponseEntity<RepostedDocumentDto>(repostedDocumentService.delete(repostId) , HttpStatus.OK);
+        return new ResponseEntity<RepostedDocumentResponseDto>(repostedDocumentService.delete(repostId) , HttpStatus.OK);
     } // delete repost
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<RepostedDocumentDto> getSingleRepost(
+    public ResponseEntity<RepostedDocumentResponseDto> getSingleRepost(
             @PathVariable Long id
     ){
-         return  new ResponseEntity<RepostedDocumentDto>(repostedDocumentService.getSingle(id) , HttpStatus.OK);
+         return  new ResponseEntity<RepostedDocumentResponseDto>(repostedDocumentService.getSingle(id) , HttpStatus.OK);
     }
 
 

@@ -1,6 +1,7 @@
 package com.dtw.serviceImpl;
 
-import com.dtw.dtos.FeedbackDto;
+import com.dtw.dtos.requestDtos.FeedbackRequestDto;
+import com.dtw.dtos.responseDtos.FeedbackResponseDto;
 import com.dtw.entity.Feedback;
 import com.dtw.entity.User;
 import com.dtw.mapper.FeedBackMapper;
@@ -26,7 +27,7 @@ public class FeedbackServiceImpl {
     @Autowired
     private UserRepo userRepo;
 
-    public FeedbackDto create(FeedbackDto feedbackDto) {
+    public FeedbackResponseDto create(FeedbackRequestDto feedbackDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User currentUser = userRepo.findByUsername(username)
@@ -42,13 +43,13 @@ public class FeedbackServiceImpl {
 
     }
 
-    public List<FeedbackDto> findNotNull() {
+    public List<FeedbackResponseDto> findNotNull() {
         return feedbackRepo.findBySolutionIsNotNull().map(FeedBackMapper.MAPPER::mapToFeedbackDto)
                 .collect(Collectors.toList());
     }
 
 
-    public List<FeedbackDto> getAll(){
+    public List<FeedbackResponseDto> getAll(){
         return  feedbackRepo.findAll().stream()
                 .map(FeedBackMapper.MAPPER::mapToFeedbackDto)
                 .collect(Collectors.toList());

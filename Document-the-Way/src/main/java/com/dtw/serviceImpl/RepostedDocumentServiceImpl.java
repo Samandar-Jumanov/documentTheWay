@@ -1,7 +1,8 @@
 package com.dtw.serviceImpl;
 
 
-import com.dtw.dtos.RepostedDocumentDto;
+import com.dtw.dtos.requestDtos.RepostedDocumentRequestDto;
+import com.dtw.dtos.responseDtos.RepostedDocumentResponseDto;
 import com.dtw.entity.Document;
 import com.dtw.entity.RepostedDocument;
 import com.dtw.entity.User;
@@ -12,7 +13,6 @@ import com.dtw.repo.RepostedDocumentRepo;
 import com.dtw.repo.UserRepo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,7 @@ public class RepostedDocumentServiceImpl {
     private RepostedDocumentRepo repostedDocumentRepo;
 
 
-    public RepostedDocumentDto createRepost (
+    public RepostedDocumentResponseDto createRepost (
            Long documentId
     ){
 
@@ -45,7 +45,7 @@ public class RepostedDocumentServiceImpl {
                 .orElseThrow(( ) -> new ResourceNotFoundException("Document" , "Document not found" , documentId));
 
 
-       RepostedDocumentDto repostDto = new RepostedDocumentDto(
+       RepostedDocumentRequestDto repostDto = new RepostedDocumentRequestDto(
                currentUser , foundDocument
        );
 
@@ -59,7 +59,7 @@ public class RepostedDocumentServiceImpl {
     }
 
 
-    public RepostedDocumentDto delete(Long id ) {
+    public RepostedDocumentResponseDto delete(Long id ) {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepo.findByUsername(username)
@@ -73,7 +73,7 @@ public class RepostedDocumentServiceImpl {
 
     }
 
-    public List<RepostedDocumentDto> getUsersReposts() {
+    public List<RepostedDocumentResponseDto> getUsersReposts() {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepo.findByUsername(username)
@@ -84,7 +84,7 @@ public class RepostedDocumentServiceImpl {
                 .collect(Collectors.toList());
     }
 
-    public RepostedDocumentDto getSingle(Long id ){
+    public RepostedDocumentResponseDto getSingle(Long id ){
 
         return  RepostedDocumentMapper.MAPPER.mapToRepostDto(repostedDocumentRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Repost" , "Repost not found " , id))

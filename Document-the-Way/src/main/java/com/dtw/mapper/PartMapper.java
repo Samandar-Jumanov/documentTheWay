@@ -1,7 +1,8 @@
 package com.dtw.mapper;
 
 
-import com.dtw.dtos.PartDto;
+import com.dtw.dtos.requestDtos.PartRequestDto;
+import com.dtw.dtos.responseDtos.PartResponseDto;
 import com.dtw.entity.Part;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,8 +13,10 @@ public interface PartMapper {
 
     PartMapper MAPPER = Mappers.getMapper(PartMapper.class);
 
-//    @Mapping(source = "document", target = "document")
 
-    PartDto mapPartToPartDto (Part part);
-    Part mapPartDtoToPart ( PartDto partDto);
+    @Mapping(target = "documentId", source = "document.id")
+    @Mapping(target = "repostId", source = "repost.id")
+    PartResponseDto mapToPartResponseDto(Part part);
+    Part mapToPart(PartRequestDto partRequestDto);
+
 }

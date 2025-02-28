@@ -1,9 +1,5 @@
-package com.dtw.dtos;
+package com.dtw.dtos.requestDtos;
 
-
-import com.dtw.entity.Part;
-import com.dtw.entity.RepostedDocument;
-import com.dtw.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,13 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class DocumentDto {
+@NoArgsConstructor
+@Setter
+@Getter
+public class DocumentRequestDto {
 
 
     private Long id;
@@ -31,6 +26,5 @@ public class DocumentDto {
     private String description;
 
     private Long userId;
-
 
 }

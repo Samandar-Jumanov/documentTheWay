@@ -1,39 +1,26 @@
 package com.dtw.mapper;
 
-import com.dtw.dtos.DocumentDto;
-import com.dtw.dtos.PartDto;
-import com.dtw.dtos.RepostedDocumentDto;
-import com.dtw.entity.Document;
-import com.dtw.entity.Part;
-import com.dtw.entity.RepostedDocument;
-import com.dtw.entity.User;
-import com.nimbusds.openid.connect.sdk.claims.UserInfo;
+import com.dtw.dtos.requestDtos.DocumentRequestDto;
+import com.dtw.dtos.responseDtos.*;
+import com.dtw.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
-
-@Mapper
+@Mapper(componentModel = "spring")
 public interface DocumentMapper {
 
     DocumentMapper MAPPER = Mappers.getMapper(DocumentMapper.class);
 
-//    @Mapping(source = "user", target = "user")
-//    @Mapping(source = "parts", target = "parts")
-//    @Mapping(source = "reposts", target = "reposts")
-//
-//    // Map related entities to their DTOs
-//    UserInfo mapToUserInfoDto(User user);
-//    List<PartDto> mapToPartDtoList(List<Part> parts);
-//    PartDto mapToPartDto(Part part);
-//    List<RepostedDocumentDto> mapToRepostDtoList(List<RepostedDocument> reposts);
-//    RepostedDocumentDto mapToRepostDto(RepostedDocument repost);
+    @Mapping(target = "user", source = "user.id")
+    @Mapping(target = "purchase", source = "purchase.id")
+    DocumentResponseDto mapToDocumentResponseDto(Document document);
 
-    Document mapToDocument ( DocumentDto documentDto);
-    DocumentDto mapToDocumentDto ( Document document);
+    Document mapToDocument(DocumentRequestDto dto);
 
-
-
+    PartResponseDto mapToPartResponseDto(Part part);
+    PurchaseResponseDto mapToPurchaseResponseDto(Long  id);
+    RepostedDocumentResponseDto mapToRepostedDocumentResponseDto(RepostedDocument repostedDocument);
+    UserResponseDto mapToUserResponseDto(Long  id);
 
 }

@@ -1,13 +1,10 @@
 package com.dtw.controller;
 
 
-import com.dtw.dtos.DocumentDto;
+import com.dtw.dtos.requestDtos.DocumentRequestDto;
+import com.dtw.dtos.responseDtos.DocumentResponseDto;
 import com.dtw.entity.Document;
 import com.dtw.serviceImpl.DocumentServiceImpl;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,47 +26,47 @@ public class DocumentController {
     private DocumentServiceImpl documentService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<DocumentDto>> getUserAllDocuments(){
+    public ResponseEntity<List<DocumentResponseDto>> getUserAllDocuments(){
 
-          List<DocumentDto> documents = documentService.getAll();
+          List<DocumentResponseDto> documents = documentService.getAll();
           return new ResponseEntity<>(documents , HttpStatus.OK);
     };
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentDto> getDocument(
+    public ResponseEntity<DocumentResponseDto> getDocument(
             @PathVariable Long id
     ){
-        DocumentDto document = documentService.getSingleDocument(id);
+        DocumentResponseDto document = documentService.getSingleDocument(id);
         return new ResponseEntity<>(document , HttpStatus.OK);
     };
 
     @PostMapping
-    public ResponseEntity<DocumentDto> createDocument(
-            @Valid  @RequestBody DocumentDto docDto
+    public ResponseEntity<DocumentResponseDto> createDocument(
+            @Valid  @RequestBody DocumentRequestDto docDto
     ){
-        DocumentDto createdDocument = documentService.createDocument(docDto);
+        DocumentResponseDto createdDocument = documentService.createDocument(docDto);
         return  new ResponseEntity<>(createdDocument , HttpStatus.CREATED);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DocumentDto> deleteDocument(
+    public ResponseEntity<DocumentResponseDto> deleteDocument(
             @PathVariable Long id
     ){
 
-        DocumentDto deletedDocument = documentService.delete(id);
+        DocumentResponseDto deletedDocument = documentService.delete(id);
         return new ResponseEntity<>(deletedDocument , HttpStatus.OK);
 
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<DocumentDto> updateDocument(
-            @Valid @RequestBody DocumentDto documentDto,
+    public ResponseEntity<DocumentResponseDto> updateDocument(
+            @Valid @RequestBody DocumentRequestDto documentDto,
             @PathVariable Long id
     ){
-        DocumentDto updatedDocument = documentService.updateDocument(documentDto , id);
+        DocumentResponseDto updatedDocument = documentService.updateDocument(documentDto , id);
         return new ResponseEntity<>(updatedDocument , HttpStatus.OK);
     }
 

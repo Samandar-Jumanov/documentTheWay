@@ -1,7 +1,8 @@
 package com.dtw.serviceImpl;
 
 
-import com.dtw.dtos.UserDto;
+import com.dtw.dtos.requestDtos.UserRequestDto;
+import com.dtw.dtos.responseDtos.UserResponseDto;
 import com.dtw.entity.RepostedDocument;
 import com.dtw.entity.User;
 import com.dtw.exception.ResourceNotFoundException;
@@ -38,7 +39,7 @@ public class UserServiceImpl {
     }
 
 
-    public UserDto createUser ( UserDto userDto ){
+    public UserResponseDto createUser (UserRequestDto userDto ){
 
 
         Optional<User> existingUser = this.userRepo.findByUsername(userDto.getUsername());
@@ -50,19 +51,19 @@ public class UserServiceImpl {
         userDto.setPassword(encoder.encode(userDto.getPassword()));
         User userEntity = UserMapper.MAPPER.mapToUser(userDto);
         User newUser = this.userRepo.save(userEntity);
-        return UserMapper.MAPPER.mapToUserDto(newUser);
+        return UserMapper.MAPPER.mapToUserResponseDto(newUser);
 
     }
 
 
-    public List<UserDto> getAllUsers(){
+    public List<UserResponseDto> getAllUsers(){
         List<User> users = this.userRepo.findAll();
-       return  users.stream().map(UserMapper.MAPPER::mapToUserDto)
+       return  users.stream().map(UserMapper.MAPPER::mapToUserResponseDto)
                 .collect(Collectors.toList());
     };
 
-    public UserDto updateUser(
-            UserDto userDto,
+    public UserResponseDto updateUser(
+            UserRequestDto userDto,
             Long id
     ){
         User foundUser = this.userRepo.findById(id)
@@ -75,27 +76,27 @@ public class UserServiceImpl {
         foundUser.setFullName(userDto.getFullName());
 
         this.userRepo.save(foundUser);
-        return UserMapper.MAPPER.mapToUserDto(foundUser);
+        return UserMapper.MAPPER.mapToUserResponseDto(foundUser);
 
     }
 
-    public UserDto getSingleUser ( Long id ){
+    public UserResponseDto getSingleUser ( Long id ){
 
           User foundUser = this.userRepo.findById(id)
                   .orElseThrow( ( ) -> new ResourceNotFoundException("Not found " , "User" , id ));
 
 
-                  return UserMapper.MAPPER.mapToUserDto(foundUser);
+                  return UserMapper.MAPPER.mapToUserResponseDto(foundUser);
 
     }
 
     // get users who has same reposts
 
-    public List<UserDto> findUsersByRepost( Long id ){
+    public List<UserResponseDto> findUsersByRepost( Long id ){
         RepostedDocument repost = repostedDocumentRepo.findById(id)
                 .orElseThrow(( ) -> new ResourceNotFoundException("Repost" , "Repost not found ", id));
         Stream<User> users = userRepo.findByReposts(repost);
-        return users.map(UserMapper.MAPPER::mapToUserDto)
+        return users.map(UserMapper.MAPPER::mapToUserResponseDto)
                 .collect(Collectors.toList());
     }
 

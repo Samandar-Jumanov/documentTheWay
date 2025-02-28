@@ -1,6 +1,7 @@
 package com.dtw.serviceImpl;
 
-import com.dtw.dtos.DocumentDto;
+import com.dtw.dtos.requestDtos.DocumentRequestDto;
+import com.dtw.dtos.responseDtos.DocumentResponseDto;
 import com.dtw.entity.Document;
 import com.dtw.entity.User;
 import com.dtw.exception.ResourceNotFoundException;
@@ -27,17 +28,17 @@ public class DocumentServiceImpl {
     @Autowired
     private UserRepo userRepo;
 
-    public List<DocumentDto> getAll() {
+    public List<DocumentResponseDto> getAll() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepo.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         return documentRepo.findByUser(currentUser)
-                .map(DocumentMapper.MAPPER::mapToDocumentDto)
+                .map(DocumentMapper.MAPPER::mapToDocumentResponseDto)
                 .collect(Collectors.toList());
     }
 
-    public DocumentDto getSingleDocument(Long id) {
+    public DocumentResponseDto getSingleDocument(Long id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Document document = documentRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Document Not found", "Document" , id));
@@ -46,11 +47,11 @@ public class DocumentServiceImpl {
         if (!document.getUser().getUsername().equals(username)) {
             throw new SecurityException("Access denied to document: " + id);
         }
-        return DocumentMapper.MAPPER.mapToDocumentDto(document);
+        return DocumentMapper.MAPPER.mapToDocumentResponseDto(document);
     }
 
 
-    public DocumentDto createDocument(@Valid DocumentDto docDto) {
+    public DocumentResponseDto createDocument(@Valid DocumentRequestDto docDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentUser = userRepo.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
@@ -62,11 +63,11 @@ public class DocumentServiceImpl {
 
 
         Document savedDocument = documentRepo.save(document);
-        return DocumentMapper.MAPPER.mapToDocumentDto(savedDocument);
+        return DocumentMapper.MAPPER.mapToDocumentResponseDto(savedDocument);
 
     }
 
-    public DocumentDto delete(Long id) {
+    public DocumentResponseDto delete(Long id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Document document = documentRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Document not found with id: " + id));
@@ -76,12 +77,12 @@ public class DocumentServiceImpl {
             throw new SecurityException("Access denied to document: " + id);
         }
 
-        DocumentDto deletedDoc = DocumentMapper.MAPPER.mapToDocumentDto(document);
+        DocumentResponseDto deletedDoc = DocumentMapper.MAPPER.mapToDocumentResponseDto(document);
         documentRepo.delete(document);
         return deletedDoc;
     }
 
-    public DocumentDto updateDocument(@Valid DocumentDto documentDto, Long id) {
+    public DocumentResponseDto updateDocument(@Valid DocumentRequestDto documentDto, Long id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Document existingDocument = documentRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Document not found with id: " + id));
@@ -95,11 +96,11 @@ public class DocumentServiceImpl {
         updateDocumentProperties(existingDocument, documentDto);
 
         Document updatedDocument = documentRepo.save(existingDocument);
-        return DocumentMapper.MAPPER.mapToDocumentDto(updatedDocument);
+        return DocumentMapper.MAPPER.mapToDocumentResponseDto(updatedDocument);
     }
 
 
-    private void updateDocumentProperties(Document existingDocument, DocumentDto dto) {
+    private void updateDocumentProperties(Document existingDocument, DocumentRequestDto dto) {
         existingDocument.setTitle(dto.getTitle());
         existingDocument.setDescription(dto.getDescription());
     }

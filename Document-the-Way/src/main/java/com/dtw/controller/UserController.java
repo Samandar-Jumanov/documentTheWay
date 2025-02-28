@@ -1,6 +1,7 @@
 package com.dtw.controller;
 
-import com.dtw.dtos.UserDto;
+import com.dtw.dtos.requestDtos.UserRequestDto;
+import com.dtw.dtos.responseDtos.UserResponseDto;
 import com.dtw.serviceImpl.UserServiceImpl;
 import com.dtw.utils.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,16 +36,16 @@ public class UserController {
 
     @PostMapping("/auth/register")
     @Operation(summary = "Register a new user", security = {})  // Empty security array means no auth required
-    public ResponseEntity<UserDto> createUser(
-            @Valid @RequestBody UserDto userDto
+    public ResponseEntity<UserResponseDto> createUser(
+            @Valid @RequestBody UserRequestDto userDto
     ) {
-        UserDto newUser = this.userServiceImpl.createUser(userDto);
+        UserResponseDto newUser = this.userServiceImpl.createUser(userDto);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/auth/login")
     @Operation(summary = "Login user and generate token", security = {})  // Empty security array means no auth required
-    public ResponseEntity<String> loginAcc(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<String> loginAcc(@Valid @RequestBody UserRequestDto userDto) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
@@ -65,7 +66,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get user by ID", security = {@SecurityRequirement(name = "bearerAuth")})
-    public ResponseEntity<UserDto> getSingleUser(
+    public ResponseEntity<UserResponseDto> getSingleUser(
             @PathVariable Long id
     ) {
         return new ResponseEntity<>(this.userServiceImpl.getSingleUser(id), HttpStatus.OK);
@@ -73,26 +74,26 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Get all users", security = {@SecurityRequirement(name = "bearerAuth")})
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         return new ResponseEntity<>(this.userServiceImpl.getAllUsers(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update user", security = {@SecurityRequirement(name = "bearerAuth")})
-    public ResponseEntity<UserDto> updateUser(
-            @RequestBody UserDto userDto,
+    public ResponseEntity<UserResponseDto> updateUser(
+            @RequestBody UserRequestDto userDto,
             @PathVariable Long id
     ) {
-        UserDto updatedUser = this.userServiceImpl.updateUser(userDto, id);
+        UserResponseDto updatedUser = this.userServiceImpl.updateUser(userDto, id);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @GetMapping("/same-reposts/{repostId}")
     @Operation(summary = "Find users with the same repost", security = {@SecurityRequirement(name = "bearerAuth")})
-    public ResponseEntity<List<UserDto>> findUsersSameReposts(
+    public ResponseEntity<List<UserResponseDto>> findUsersSameReposts(
             @PathVariable Long repostId
     ) {
-        List<UserDto> users = userServiceImpl.findUsersByRepost(repostId);
+        List<UserResponseDto> users = userServiceImpl.findUsersByRepost(repostId);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

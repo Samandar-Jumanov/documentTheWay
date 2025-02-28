@@ -1,4 +1,5 @@
-package com.dtw.dtos;
+package com.dtw.dtos.requestDtos;
+
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -6,13 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class PartDto {
-
+@NoArgsConstructor
+@Setter
+@Getter
+public class PartRequestDto {
 
     private Long id ;
 
@@ -21,6 +20,5 @@ public class PartDto {
 
     @NotNull
     private String resource;
-
 
 }

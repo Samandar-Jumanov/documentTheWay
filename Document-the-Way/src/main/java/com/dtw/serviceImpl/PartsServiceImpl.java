@@ -1,7 +1,8 @@
 package com.dtw.serviceImpl;
 
 
-import com.dtw.dtos.PartDto;
+import com.dtw.dtos.requestDtos.PartRequestDto;
+import com.dtw.dtos.responseDtos.PartResponseDto;
 import com.dtw.entity.Document;
 import com.dtw.entity.Part;
 import com.dtw.exception.ResourceNotFoundException;
@@ -26,38 +27,38 @@ public class PartsServiceImpl {
     @Autowired
     private DocumentRepo documentRepo;
 
-    public PartDto getSingle(Long id) {
+    public PartResponseDto getSingle(Long id) {
         Part part = partsRepo.findById(id)
                 .orElseThrow(( ) -> new ResourceNotFoundException("Part " , "Part" , id));
 
-        return PartMapper.MAPPER.mapPartToPartDto(part);
+        return PartMapper.MAPPER.mapToPartResponseDto(part);
     }
 
-    public List<PartDto> getAllPartsOfDocument(Long id) {
+    public List<PartResponseDto> getAllPartsOfDocument(Long id) {
         Document  document = documentRepo.findById(id)
                 .orElseThrow( ( ) ->new ResourceNotFoundException("Part not found " , "Part " , id));
 
        return  partsRepo.findByDocument(document)
-               .map(PartMapper.MAPPER::mapPartToPartDto)
+               .map(PartMapper.MAPPER::mapToPartResponseDto)
                .collect(Collectors.toList());
 
     }
 
-    public PartDto add(Long id, PartDto partDto) {
+    public PartResponseDto add(Long id, PartRequestDto partDto) {
         Document document = documentRepo.findById(id)
                 .orElseThrow(( ) -> new ResourceNotFoundException("Document not found", "Document" , id));
 
 
         System.out.println(document.getId());
-        Part partEntity = PartMapper.MAPPER.mapPartDtoToPart(partDto);
+        Part partEntity = PartMapper.MAPPER.mapToPart(partDto);
         partEntity.setDocument(document);
 
         Part part = partsRepo.save(partEntity);
-        return PartMapper.MAPPER.mapPartToPartDto(partEntity);
+        return PartMapper.MAPPER.mapToPartResponseDto(partEntity);
 
     }
 
-    public PartDto delete(Long id) {
+    public PartResponseDto delete(Long id) {
 
         Part foundPart = partsRepo.findById(id)
                 .orElseThrow(( ) -> new ResourceNotFoundException("Part not found" , "Part" , id));
@@ -65,10 +66,10 @@ public class PartsServiceImpl {
 
         partsRepo.delete(foundPart);
 
-        return PartMapper.MAPPER.mapPartToPartDto(foundPart);
+        return PartMapper.MAPPER.mapToPartResponseDto(foundPart);
     }
 
-    public PartDto update(Long id,  PartDto partDto) {
+    public PartResponseDto update(Long id,  PartRequestDto partDto) {
 
         Part foundPart = partsRepo.findById(id)
                 .orElseThrow(( ) -> new ResourceNotFoundException("Part not found" , "Part" , id));
@@ -79,7 +80,7 @@ public class PartsServiceImpl {
 
 
         partsRepo.save(foundPart);
-        return PartMapper.MAPPER.mapPartToPartDto(foundPart);
+        return PartMapper.MAPPER.mapToPartResponseDto(foundPart);
 
     }
 }

@@ -28,7 +28,7 @@ public class Purchase {
 
     @ManyToOne(fetch = FetchType.EAGER)
 
-    @PrimaryKeyJoinColumn(name = "document_id")
+    @PrimaryKeyJoinColumn(name = "purchase_id")
     private Document purchase;
 
 

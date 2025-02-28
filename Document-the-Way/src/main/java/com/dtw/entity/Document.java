@@ -23,8 +23,7 @@ public class Document {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER )
     private User user;
 
     @OneToMany(mappedBy = "document" , cascade = CascadeType.ALL , orphanRemoval = true )

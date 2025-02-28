@@ -1,6 +1,7 @@
-package com.dtw.dtos;
+package com.dtw.dtos.requestDtos;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,14 +11,17 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
-public class NotificationDto {
+@Getter
+public class FeedbackRequestDto {
 
-    private  Long id;
+    private Long id;
 
-    @NotNull
     @NotBlank
-    private String message;
+    @NotNull
+    private String feedbackValue;
+
+    @Nullable
+    private String solution;
 
 }
