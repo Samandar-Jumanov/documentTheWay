@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,11 +33,13 @@ public class FeedbackServiceImpl {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
 
+
         Feedback feedbackEntity = FeedBackMapper.MAPPER.mapToFeedback(feedbackDto);
         feedbackEntity.setUser(currentUser);
-        feedbackRepo.save(feedbackEntity);
-
-        return  FeedBackMapper.MAPPER.mapToFeedbackDto(feedbackEntity);
+        System.out.println(feedbackEntity.getFeedbackValue());
+        System.out.println(feedbackEntity.getUser().getFullName());
+        System.out.println(feedbackEntity.getSolution());
+        return  FeedBackMapper.MAPPER.mapToFeedbackDto( feedbackRepo.save(feedbackEntity));
 
 
     }

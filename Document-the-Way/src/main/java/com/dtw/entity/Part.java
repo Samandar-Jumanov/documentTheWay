@@ -30,7 +30,6 @@ public class Part {
     private Document document;
 
     @ManyToOne(fetch = FetchType.EAGER)
-
     private RepostedDocument repost;
 
     @CreationTimestamp

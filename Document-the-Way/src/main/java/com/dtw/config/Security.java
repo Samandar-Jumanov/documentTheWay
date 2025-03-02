@@ -42,6 +42,7 @@ public class Security {
                         .requestMatchers(
                                 "/api/users/auth/login",
                                 "/api/users/auth/register",
+                                "/api/users/auth/login",
                                 "swagger-ui/index.html",
                                 "swagger-ui/**",
                                 "/v3/api-docs/**",
@@ -66,5 +67,10 @@ public class Security {
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+         return  new BCryptPasswordEncoder();
     }
 }

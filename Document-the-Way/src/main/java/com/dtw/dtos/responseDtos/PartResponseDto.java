@@ -18,9 +18,12 @@ public class PartResponseDto {
     private String partTitle;
     private String resource;
 
+
+    private DocumentResponseDto document;
+    private RepostedDocumentResponseDto repost;
+
+
     private LocalTime createdAt;
     private LocalTime updatedAt;
 
-    private Long documentId;
-    private Long repostId;
 }

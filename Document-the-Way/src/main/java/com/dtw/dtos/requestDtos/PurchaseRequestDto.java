@@ -16,10 +16,10 @@ public class PurchaseRequestDto {
 
     private Long id;
     private User user;
-    private Document purchase;
+    private Document document;
 
     public PurchaseRequestDto(User currentUser, Document foundDocument) {
-        this.purchase = foundDocument;
+        this.document = foundDocument;
         this.user = currentUser;
     }
 

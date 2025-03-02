@@ -18,7 +18,6 @@ public class DaoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Attempting to load user: " + username);
         try {
             User foundUser = userRepo.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));

@@ -1,5 +1,6 @@
 package com.dtw.controller;
 
+import com.dtw.dtos.requestDtos.LoginDto;
 import com.dtw.dtos.requestDtos.UserRequestDto;
 import com.dtw.dtos.responseDtos.UserResponseDto;
 import com.dtw.serviceImpl.UserServiceImpl;
@@ -45,11 +46,15 @@ public class UserController {
 
     @PostMapping("/auth/login")
     @Operation(summary = "Login user and generate token", security = {})  // Empty security array means no auth required
-    public ResponseEntity<String> loginAcc(@Valid @RequestBody UserRequestDto userDto) {
+    public ResponseEntity<String> loginAcc(@Valid @RequestBody LoginDto userDto) {
         try {
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
             );
+
+            System.out.println(authentication.getDetails());
+            System.out.println(authentication.isAuthenticated());
 
             if (authentication.isAuthenticated()) {
                 String token = jwtService.generateToken(userDto.getUsername());

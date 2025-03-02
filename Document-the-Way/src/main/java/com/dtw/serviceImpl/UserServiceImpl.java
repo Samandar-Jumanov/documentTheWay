@@ -31,6 +31,8 @@ public class UserServiceImpl {
     private RepostedDocumentRepo repostedDocumentRepo;
     @Autowired
     private final  UserRepo userRepo;
+
+    @Autowired
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 

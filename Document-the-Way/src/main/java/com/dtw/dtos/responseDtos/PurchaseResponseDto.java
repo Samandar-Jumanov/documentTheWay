@@ -11,15 +11,11 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class PurchaseResponseDto {
-
     private long id;
-
-    private Long userId;
-    private Long purchaseId;
-
+    private UserResponseDto user;
+    private DocumentResponseDto document;
     private LocalTime createdAt;
     private LocalTime updatedAt;
-
-
 }

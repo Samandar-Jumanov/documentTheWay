@@ -1,5 +1,6 @@
 package com.dtw.dtos.responseDtos;
 
+import com.dtw.entity.Document;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,8 @@ public class RepostedDocumentResponseDto {
 
     private Long id;
 
-    private Long userId;
-    private Long documentId;
+    private UserResponseDto user;
+    private DocumentResponseDto document;
 
     private List<PartResponseDto> parts;
 

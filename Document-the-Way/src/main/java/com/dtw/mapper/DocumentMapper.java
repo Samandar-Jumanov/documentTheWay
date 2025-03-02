@@ -15,12 +15,12 @@ public interface DocumentMapper {
     @Mapping(target = "user", source = "user.id")
     @Mapping(target = "purchase", source = "purchase.id")
     DocumentResponseDto mapToDocumentResponseDto(Document document);
-
     Document mapToDocument(DocumentRequestDto dto);
 
     PartResponseDto mapToPartResponseDto(Part part);
     PurchaseResponseDto mapToPurchaseResponseDto(Long  id);
     RepostedDocumentResponseDto mapToRepostedDocumentResponseDto(RepostedDocument repostedDocument);
     UserResponseDto mapToUserResponseDto(Long  id);
+
 
 }

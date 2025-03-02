@@ -23,13 +23,11 @@ public class Purchase {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-
-    @PrimaryKeyJoinColumn(name = "purchase_id")
-    private Document purchase;
+    @PrimaryKeyJoinColumn(name = "document_id")
+    private Document document;
 
 
     @CreationTimestamp

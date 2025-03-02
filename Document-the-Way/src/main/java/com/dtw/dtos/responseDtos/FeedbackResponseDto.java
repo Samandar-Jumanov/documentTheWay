@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,5 +17,10 @@ public class FeedbackResponseDto {
     private String feedbackValue;
     private String solution;
 
-    private Long userId; // Optional if you want to show the user's ID in response
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private UserResponseDto user;
+
+
 }

@@ -72,9 +72,9 @@ public class PurchaseServiceImpl {
         Purchase foundPurchase = purchaseRepo.findById(purchaseId)
                 .orElseThrow(( ) -> new ResourceNotFoundException("Purchase" , "Purchase not found " , purchaseId));
 
-        if(foundPurchase.getUser().getId() != currentUser.getId()){
-            throw   new NotGrantedAccess("You have not purchase this course yet " , "Document:" + foundPurchase.getPurchase().getTitle() );
-        }
+//        if(foundPurchase.getUser().getId() != currentUser.getId()){
+//            throw   new NotGrantedAccess("You have not purchase this course yet " , "Document:" + foundPurchase.getDocument().getTitle() );
+//        }
         return PurchaseMapper.MAPPER.mapToPurchaseDto(foundPurchase);
     }
 
@@ -92,8 +92,7 @@ public class PurchaseServiceImpl {
 
 
         PurchaseRequestDto purchaseDto = new PurchaseRequestDto(
-                currentUser ,
-                foundDocument
+                currentUser , foundDocument
         );
 
         Purchase newPurchase  = purchaseRepo.save(PurchaseMapper.MAPPER.mapToPurchase(purchaseDto));

@@ -1,6 +1,5 @@
 package com.dtw.dtos.responseDtos;
 
-import com.dtw.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,8 @@ public class DocumentResponseDto {
 
 
     private UserResponseDto user;
-    private PurchaseResponseDto purchase;  // Assuming you want to expose purchase details
-    private List<PartResponseDto> parts;   // Parts are nested inside document
-    private List<RepostedDocumentResponseDto> reposts;  // Nested reposts
+    private PurchaseResponseDto purchase;
+    private List<PartResponseDto> parts;
+    private List<RepostedDocumentResponseDto> reposts;
+
 }
