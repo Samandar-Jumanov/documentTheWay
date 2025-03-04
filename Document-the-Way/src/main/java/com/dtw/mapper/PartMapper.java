@@ -17,20 +17,18 @@ public interface PartMapper {
 
     PartMapper MAPPER = Mappers.getMapper(PartMapper.class);
 
-    // Use named mappers to prevent circular references
     @Mapping(target = "document", source = "document", qualifiedByName = "toDocumentWithoutParts")
     @Mapping(target = "repost", source = "repost", qualifiedByName = "toRepostedDocumentWithoutParts")
     PartResponseDto mapToPartResponseDto(Part part);
 
     Part mapToPart(PartRequestDto partRequestDto);
 
-    // Document mapper that doesn't include parts
     @Named("toDocumentWithoutParts")
     @Mapping(target = "parts", ignore = true)
     @Mapping(target = "user", ignore = true)
     DocumentResponseDto mapToDocumentWithoutParts(Document document);
 
     @Named("toRepostedDocumentWithoutParts")
-    @Mapping(target = "parts", ignore = true)
+    @Mapping(target = "repostParts", ignore = true)
     RepostedDocumentResponseDto mapToRepostedDocumentWithoutParts(RepostedDocument repostedDocument);
 }

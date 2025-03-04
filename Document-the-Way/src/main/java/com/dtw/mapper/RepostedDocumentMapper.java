@@ -1,10 +1,7 @@
 package com.dtw.mapper;
 
 import com.dtw.dtos.requestDtos.RepostedDocumentRequestDto;
-import com.dtw.dtos.responseDtos.DocumentResponseDto;
-import com.dtw.dtos.responseDtos.PartResponseDto;
-import com.dtw.dtos.responseDtos.RepostedDocumentResponseDto;
-import com.dtw.dtos.responseDtos.UserResponseDto;
+import com.dtw.dtos.responseDtos.*;
 import com.dtw.entity.Document;
 import com.dtw.entity.Part;
 import com.dtw.entity.RepostedDocument;
@@ -18,37 +15,31 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RepostedDocumentMapper {
-
     RepostedDocumentMapper MAPPER = Mappers.getMapper(RepostedDocumentMapper.class);
 
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "document", ignore = true)
-    @Mapping(target = "parts", ignore = true)
-    RepostedDocument mapToRepost(RepostedDocumentRequestDto repostDto);
-
-    @Mapping(target = "user", source = "user", qualifiedByName = "mapUserWithoutCollections")
-    @Mapping(target = "document", source = "document", qualifiedByName = "mapDocumentWithoutCollections")
-    @Mapping(target = "parts", source = "parts", qualifiedByName = "mapPartsWithoutRepost")
+    @Mapping(target = "user", qualifiedByName = "userWithoutDocuments")
+    @Mapping(target = "document", qualifiedByName = "documentWithoutUser")
     RepostedDocumentResponseDto mapToRepostDto(RepostedDocument repost);
 
-    @Named("mapUserWithoutCollections")
-    @Mapping(target = "feedbacks", ignore = true)
+    @Named("userWithoutDocuments")
     @Mapping(target = "documents", ignore = true)
-    @Mapping(target = "reposts", ignore = true)
+    @Mapping(target = "feedbacks", ignore = true)
     @Mapping(target = "notifications", ignore = true)
     @Mapping(target = "purchases", ignore = true)
-    UserResponseDto mapUserWithoutCollections(User user);
+    @Mapping(target = "reposts", ignore = true)
+    UserResponseDto mapUserWithoutDocuments(User user);
 
-    @Named("mapDocumentWithoutCollections")
-    @Mapping(target = "parts", ignore = true)
+    // Document without user to break the cycle
+    @Named("documentWithoutUser")
     @Mapping(target = "user", ignore = true)
-    DocumentResponseDto mapDocumentWithoutCollections(Document document);
+    @Mapping(target = "parts", ignore = true)
+    @Mapping(target = "reposts", ignore = true)
+    DocumentResponseDto mapDocumentWithoutUser(Document document);
 
-    @Named("mapPartsWithoutRepost")
-    List<PartResponseDto> mapPartsWithoutRepost(List<Part> parts);
-
-    @Named("mapPartWithoutRepost")
-    @Mapping(target = "document", ignore = true)
-    @Mapping(target = "repost", ignore = true)
-    PartResponseDto mapPartWithoutRepost(Part part);
+    // Original methods for other uses
+    RepostedDocument mapToRepost(RepostedDocumentRequestDto repostDto);
+    DocumentResponseDto mapToDocumentResponseDto(Document document);
+    UserResponseDto mapToUserResponseDto(User user);
+    PartResponseDto mapToPartResponseDto(Part repostPart);
+    List<PartResponseDto> mapToPartResponseDtoList(List<Part> repostParts);
 }

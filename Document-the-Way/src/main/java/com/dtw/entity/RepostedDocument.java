@@ -1,6 +1,7 @@
 package com.dtw.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,14 +24,14 @@ public class RepostedDocument {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-
-    private User user;
+    private User user ;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Document document;
 
     @OneToMany(mappedBy = "repost" , cascade = CascadeType.ALL , orphanRemoval = true)
-    List<Part> parts = new ArrayList<>();
+    @JsonBackReference
+    List<Part> repostParts = new ArrayList<>();
 
 
 }

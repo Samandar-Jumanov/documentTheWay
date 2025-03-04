@@ -19,7 +19,6 @@ public interface FeedBackMapper {
     @Mapping(target = "user", source = "user", qualifiedByName = "toUserResponseDtoWithoutFeedbacks")
     FeedbackResponseDto mapToFeedbackDto(Feedback feedback);
 
-    // Add this method with a specific name to break the cycle
     @org.mapstruct.Named("toUserResponseDtoWithoutFeedbacks")
     @Mapping(target = "feedbacks", ignore = true)
     @Mapping(target = "documents", ignore = true)

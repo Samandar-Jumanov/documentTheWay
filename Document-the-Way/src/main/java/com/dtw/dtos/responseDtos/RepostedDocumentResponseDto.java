@@ -18,7 +18,6 @@ public class RepostedDocumentResponseDto {
 
     private UserResponseDto user;
     private DocumentResponseDto document;
-
-    private List<PartResponseDto> parts;
+    private List<PartResponseDto> repostParts;
 
 }
