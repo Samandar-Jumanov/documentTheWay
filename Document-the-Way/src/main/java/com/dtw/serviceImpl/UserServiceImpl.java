@@ -10,7 +10,6 @@ import com.dtw.exception.UsernameTakenException;
 import com.dtw.mapper.UserMapper;
 import com.dtw.repo.RepostedDocumentRepo;
 import com.dtw.repo.UserRepo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,23 +20,21 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Slf4j
 @Service
 @Transactional
 public class UserServiceImpl {
 
 
-    @Autowired
-    private RepostedDocumentRepo repostedDocumentRepo;
-    @Autowired
-    private final  UserRepo userRepo;
+    private final UserRepo userRepo;
+    private final BCryptPasswordEncoder encoder;
+    private final RepostedDocumentRepo repostedDocumentRepo;
 
     @Autowired
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
-
-    UserServiceImpl ( UserRepo repo ){
-          this.userRepo = repo;
+    public UserServiceImpl(UserRepo userRepo, BCryptPasswordEncoder encoder,
+                           RepostedDocumentRepo repostedDocumentRepo) {
+        this.userRepo = userRepo;
+        this.encoder = encoder;
+        this.repostedDocumentRepo = repostedDocumentRepo;
     }
 
 

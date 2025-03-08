@@ -1,10 +1,10 @@
 package com.dtw.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,12 @@ public class Document {
     private List<RepostedDocument> reposts = new ArrayList<>();
 
 
+
+    @OneToOne
+    @JoinColumn(name = "media_id" , nullable = false)
+    private Media introductionMedia;
+
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_id" , nullable = true)
     private Purchase purchase;
@@ -41,14 +47,11 @@ public class Document {
     private String description;
 
 
-
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-
 
 
 }

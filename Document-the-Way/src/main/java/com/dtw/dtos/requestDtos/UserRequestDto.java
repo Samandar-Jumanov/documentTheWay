@@ -1,6 +1,7 @@
 package com.dtw.dtos.requestDtos;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Setter
 public class UserRequestDto {
 
+
     private Long id;
 
     @NotBlank
@@ -21,6 +23,7 @@ public class UserRequestDto {
     private String fullName;
     @NotBlank
     private String password;
+
 
 
 }

@@ -1,32 +1,30 @@
-package com.dtw.dtos.requestDtos;
+package com.dtw.dtos.responseDtos;
 
+import com.dtw.entity.Document;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class DocumentRequestDto {
-
+@Setter
+public class MediaResponseDto {
 
     private Long id;
 
     @NotBlank
     @NotNull
-    private String title;
+    private String mediaType;
 
     @NotBlank
     @NotNull
-    private String description;
+    private String mediaUrl;
 
-    private Long userId;
-
+    private Document document;
 
 }

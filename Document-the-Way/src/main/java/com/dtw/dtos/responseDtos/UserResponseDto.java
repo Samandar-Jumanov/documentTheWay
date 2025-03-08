@@ -26,4 +26,10 @@ public class UserResponseDto {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public UserResponseDto(long id, String fullName, String username) {
+        this.id = id;
+        this.fullName =fullName;
+        this.username = username;
+    }
 }
