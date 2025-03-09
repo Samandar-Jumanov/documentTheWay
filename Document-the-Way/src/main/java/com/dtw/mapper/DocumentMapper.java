@@ -14,6 +14,7 @@ public interface DocumentMapper {
 
     @Mapping(target = "user", source = "user.id")
     @Mapping(target = "purchase", source = "purchase.id")
+    @Mapping(target = "introductionMedia", source = "introductionMedia")
     DocumentResponseDto mapToDocumentResponseDto(Document document);
     Document mapToDocument(DocumentRequestDto dto);
 
@@ -21,6 +22,8 @@ public interface DocumentMapper {
     PurchaseResponseDto mapToPurchaseResponseDto(Long  id);
     RepostedDocumentResponseDto mapToRepostedDocumentResponseDto(RepostedDocument repostedDocument);
     UserResponseDto mapToUserResponseDto(Long  id);
+    MediaResponseDto mapToMediaResponse(Long id );
+
 
 
 }

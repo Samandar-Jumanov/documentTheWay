@@ -1,5 +1,6 @@
 package com.dtw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Media {
 
     @OneToOne
     @JoinColumn(name = "document_id" , nullable = false)
+    @JsonBackReference
     private Document document;
 
 }

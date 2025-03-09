@@ -24,5 +24,6 @@ public class DocumentResponseDto {
     private PurchaseResponseDto purchase;
     private List<PartResponseDto> parts;
     private List<RepostedDocumentResponseDto> reposts;
+    private MediaResponseDto introductionMedia;
 
 }

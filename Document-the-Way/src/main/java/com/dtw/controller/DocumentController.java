@@ -28,8 +28,7 @@ public class DocumentController {
     @Autowired
     private DocumentServiceImpl documentService;
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+
 
     @GetMapping("/all")
     public ResponseEntity<List<DocumentResponseDto>> getUserAllDocuments(){
@@ -48,8 +47,8 @@ public class DocumentController {
             return new ResponseEntity<>("redirect:/" , HttpStatus.BAD_REQUEST);
         }
 
-        String mediaurl = documentService.uploadFile(file , documentId);
-        return new ResponseEntity<>(mediaurl , HttpStatus.CREATED);
+        String mediaUrl = documentService.uploadFile(file , documentId);
+        return new ResponseEntity<>(mediaUrl , HttpStatus.CREATED);
 
     }
 

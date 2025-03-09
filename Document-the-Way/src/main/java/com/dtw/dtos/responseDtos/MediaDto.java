@@ -1,5 +1,6 @@
 package com.dtw.dtos.responseDtos;
 
+
 import com.dtw.entity.Document;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,12 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class MediaResponseDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class MediaDto {
 
     private Long id;
 
@@ -25,5 +25,6 @@ public class MediaResponseDto {
     @NotNull
     private String mediaUrl;
 
+    private Document document;
 
 }

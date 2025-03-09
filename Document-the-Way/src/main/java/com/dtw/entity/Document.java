@@ -1,5 +1,6 @@
 package com.dtw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,8 +35,8 @@ public class Document {
 
 
 
-    @OneToOne
-    @JoinColumn(name = "media_id" , nullable = false)
+    @OneToOne(optional = true)
+    @JsonBackReference
     private Media introductionMedia;
 
 

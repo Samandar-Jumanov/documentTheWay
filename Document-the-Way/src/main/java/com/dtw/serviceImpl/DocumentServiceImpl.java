@@ -2,6 +2,7 @@ package com.dtw.serviceImpl;
 
 import com.dtw.dtos.requestDtos.DocumentRequestDto;
 import com.dtw.dtos.responseDtos.DocumentResponseDto;
+import com.dtw.dtos.responseDtos.MediaDto;
 import com.dtw.dtos.responseDtos.MediaResponseDto;
 import com.dtw.entity.Document;
 import com.dtw.entity.Media;
@@ -69,12 +70,12 @@ public class DocumentServiceImpl {
                     ? fileToSave.getContentType().split("/")[0]
                     : "unknown";
 
-            MediaResponseDto mediaResponseDto = new MediaResponseDto();
-            mediaResponseDto.setMediaType(mediaType);
-            mediaResponseDto.setMediaUrl(mediaUrl);
-            mediaResponseDto.setDocument(foundDocument);
+            MediaDto mediaDto = new MediaDto();
+            mediaDto.setMediaType(mediaType);
+            mediaDto.setMediaUrl(mediaUrl);
+            mediaDto.setDocument(foundDocument);
 
-            Media newMedia = mediaRepo.save(MediaMapper.MAPPER.mapToMedia(mediaResponseDto));
+            Media newMedia = mediaRepo.save(MediaMapper.MAPPER.mapToMedia(mediaDto));
 
             foundDocument.setIntroductionMedia(newMedia);
             documentRepo.save(foundDocument);
@@ -91,10 +92,10 @@ public class DocumentServiceImpl {
         Document document = documentRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Document Not found", "Document" , id));
 
-        // Verify document belongs to current user
         if (!document.getUser().getUsername().equals(username)) {
             throw new SecurityException("Access denied to document: " + id);
         }
+
         return DocumentMapper.MAPPER.mapToDocumentResponseDto(document);
     }
 
